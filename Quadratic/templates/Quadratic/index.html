@@ -1,0 +1,78 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+	<link rel="stylesheet" href="{% static 'Quadratic/bootstrap.css' %}">
+	<link rel="stylesheet" href="{% static 'Quadratic/style.css' %}">
+	<title>|| Quadratic Equation Solver ||</title>
+</head>
+<body>
+	<div id="body">
+	<div id="head" class="text-center">Quadratic Equation Solver !</div></div>
+
+	<div class="container" style="margin-top:20px;">
+		The quadratic of the form ax<sup>2</sup> + bx + c = 0 has the roots which can be calculated by this calculator.
+	</div>
+	{# Main form #}
+	<div class="container container-fluid" style="margin-top: 3%; background-color:#eee;">
+    	<div class="col-xs-4">
+    		<form method="POST" action="{% url 'main' %}" autocomplete="off">
+    			 {% csrf_token %}
+    			<div style="height:20px;"></div> {# BruteForce -- Not recommended #}
+    			<div class="form-group">
+	    			<label for="a"> Value of <b>a</b> here: </label>
+	    			{# <input class="form-control" placeholder="Value for a" id="a" type="text" autofocus required> #}
+	    			{{ q.a }}
+    			</div>	
+    			<div class="form-group">
+	    			<label for="b"> Value of <b>b</b> here: </label>
+	    			{# <input class="form-control" placeholder="Value for b" id="b" type="text" autofocus required> #}
+	    			{{ q.b }}
+    			</div>
+    			<div class="form-group">
+	    			<label for="c"> Value of <b>c</b> here: </label>
+	    			{# <input class="form-control" placeholder="Value for c" id="c" type="text" autofocus required> #}
+	    			{{ q.c }}
+    			</div>
+    			<button class="btn btn-primary btn-block" type="submit">Calculate roots</button>
+    			<div style="height:20px;"></div> {# BruteForce -- Not recommended #}
+    		</form>
+    	</div>
+    </div>
+<hr>
+	{# Result #}
+
+	<div class="container">
+		<div class="col-xs-6">
+			<p>Roots of the equation 
+			{# Steps to format the quadratic input we got ! #}
+			<mark>
+			{% if a == 1 %}
+				x 
+			{% elif a == -1 %}
+				-x
+			{% else %}
+				{{ a }}x 
+			{% endif %}<sup>2</sup> {% if b > 0 or b == 'b' %} + {% else %} {% endif %} 
+			{% if b == 1 %}
+				x
+			{% else %}
+				{{ b }}x 
+			{% endif %} {% if c > 0 or c == 'c' %} + {% else %} {% endif %} {{ c }} = 0</mark>
+			are:
+			</p>
+			<ul>
+				<li>{{ alpha }}</li>
+				<li>{{ beta }}</li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>
